@@ -1,12 +1,6 @@
 {% ckan_extends %}
 {% block footer_content %}
-      <nav class="footer-links">
-        {% block footer_nav %}
-          <ul class="unstyled">
-            {% block footer_links %}
-              <li><a href="{{ h.url_for(controller='home', action='about') }}">{{ _('About {0}').format(g.site_title) }}</a></li>
-            {% endblock %}
-          </ul>
-        {% endblock %}
-       </nav>
+       <div>
+       This research is supported under the Australian Research Council's Discovery Indigenous Projects funding scheme (IN140100033)
+       </div>
 {% endblock %}
