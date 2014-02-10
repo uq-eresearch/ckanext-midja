@@ -1,0 +1,29 @@
+.account-masthead {
+background:#000033;
+color:#ffffff;
+}
+.account-masthead .account ul li a {
+color:#ffffff;
+}
+.account-masthead .account ul li a:hover {
+background: #5486c1;
+}
+.account-masthead .account ul li {
+  border-left: 1px solid #5486c1;
+}
+.masthead {
+background:#993300;
+}
+body, .tags, .btn-primary, .account-masthead .account .notifications a span {
+background:#993300;
+}
+.site-footer {
+background:#993300;
+color:#ffffff;
+}
+.footer-links a {
+color:#ffffff;
+}
+.featured, .group-listing {
+display:none;
+}
