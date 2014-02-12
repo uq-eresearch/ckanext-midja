@@ -1,0 +1,8 @@
+{% ckan_extends %}
+
+{% block package_basic_fields_custom %}
+  {{ form.input('source_url', label=_('Source URL'), id='field-source_url', placeholder=_('Source URL'), value=data.source_url, error=errors.source_url, classes=['control-medium']) }}
+
+  {{ form.input('date', label=_('Date'), id='field-date', placeholder=_('Date'), value=data.date, error=errors.date, classes=['control-medium']) }}
+
+{% endblock %}

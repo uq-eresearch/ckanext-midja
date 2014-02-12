@@ -1,0 +1,24 @@
+{% ckan_extends %}
+
+{% block package_description %}
+  {{ super() }}
+
+  {# Add our custom source_url field to the dataset read page. #}
+  {% if pkg.get('source_url') %}
+    <section id="dataset-source_url" class="embedded-content">
+    <p><strong>Source URL:</strong> <a href="{{ pkg.source_url }}">{{ pkg.source_url }}</a></p>
+    </section>
+  {% endif %}
+  {% if pkg.get('date') %}
+    <section id="dataset-date" class="embedded-content">
+    <p><strong>Date:</strong> {{ pkg.date }}</p>
+    </section>
+  {% endif %}
+
+  {% if pkg.get('data_type') %}
+    <section id="dataset-data_type" class="embedded-content">
+    <p><strong>Type:</strong> {{ pkg.data_type[0] }}</p>
+    </section>
+  {% endif %}
+
+{% endblock %}
