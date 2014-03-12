@@ -26,6 +26,19 @@ def create_data_types():
                     "Adding tag {0} to vocab 'data_types'".format(tag))
             data = {'name': tag, 'vocabulary_id': vocab['id']}
             toolkit.get_action('tag_create')(context, data)
+    try:
+        geographies = {'id': 'geographies'} 
+        toolkit.get_action('vocabulary_show')(context, geographies)
+        logging.info("Example geographies vocabulary already exists, skipping.")
+    except toolkit.ObjectNotFound:  
+        logging.info("Creating vocab 'geographies'")
+        data = {'name': 'data_types'}
+        vocab = toolkit.get_action('vocabulary_create')(context, geographies)
+        for tag in (u'quantitative-data', u'report', u'qualitative-survey', u'qualitative-longitudinal-study', u'qualitative-case-study', u'geospatial-data'):
+            logging.info(
+                    "Adding tag {0} to vocab 'geographies'".format(tag))
+            data = {'name': tag, 'vocabulary_id': vocab['id']}
+            toolkit.get_action('tag_create')(context, data)
 
 def data_types():
     '''Return the list of terms from the data types vocabulary.'''
@@ -33,6 +46,14 @@ def data_types():
     try:
         return toolkit.get_action('tag_list')(
                 data_dict={'vocabulary_id': 'data_types'})
+    except toolkit.ObjectNotFound:
+        return None
+def geographies():
+    '''Return the list of terms from the geographies vocabulary.'''
+    create_data_types()
+    try:
+        return toolkit.get_action('tag_list')(
+                data_dict={'vocabulary_id': 'geographies'})
     except toolkit.ObjectNotFound:
         return None
 
@@ -47,7 +68,7 @@ class MidjaPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         toolkit.add_resource('fantastic','midja')
 
     def get_helpers(self):
-        return {'data_types': data_types}
+        return {'data_types': data_types, 'geographies': geographies}
 
     def is_fallback(self):
         # Return True to register this plugin as the default handler for
@@ -64,6 +85,11 @@ class MidjaPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         schema.update({
                 'data_type': [toolkit.get_validator('ignore_missing'),
                     toolkit.get_converter('convert_to_tags')('data_types')]
+                })
+        # Add our custom geographies metadata field to the schema.
+        schema.update({
+                'geography': [toolkit.get_validator('ignore_missing'),
+                    toolkit.get_converter('convert_to_tags')('geographies')]
                 })
         # Add source_url and date fields to the schema
         schema.update({
@@ -101,7 +127,11 @@ class MidjaPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
                 toolkit.get_converter('convert_from_tags')('data_types'),
                 toolkit.get_validator('ignore_missing')]
             })
-
+        schema.update({
+            'geography': [
+                toolkit.get_converter('convert_from_tags')('geographies'),
+                toolkit.get_validator('ignore_missing')]
+            })
 
         schema.update({
             'source_url': [toolkit.get_converter('convert_from_extras'),
