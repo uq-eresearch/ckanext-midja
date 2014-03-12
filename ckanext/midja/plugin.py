@@ -34,7 +34,7 @@ def create_data_types():
         logging.info("Creating vocab 'geographies'")
         data = {'name': 'data_types'}
         vocab = toolkit.get_action('vocabulary_create')(context, geographies)
-        for tag in (u'quantitative-data', u'report', u'qualitative-survey', u'qualitative-longitudinal-study', u'qualitative-case-study', u'geospatial-data'):
+        for tag in (u'LGA',u'SLA',u'IA',u'ML'):
             logging.info(
                     "Adding tag {0} to vocab 'geographies'".format(tag))
             data = {'name': tag, 'vocabulary_id': vocab['id']}
