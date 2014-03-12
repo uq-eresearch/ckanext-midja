@@ -26,14 +26,18 @@ def create_data_types():
                     "Adding tag {0} to vocab 'data_types'".format(tag))
             data = {'name': tag, 'vocabulary_id': vocab['id']}
             toolkit.get_action('tag_create')(context, data)
+
+def create_geographies():
+    user = toolkit.get_action('get_site_user')({'ignore_auth': True}, {})
+    context = {'user': user['name']}
     try:
-        geographies = {'id': 'geographies'} 
-        toolkit.get_action('vocabulary_show')(context, geographies)
+        data = {'id': 'geographies'} 
+        toolkit.get_action('vocabulary_show')(context, data)
         logging.info("Example geographies vocabulary already exists, skipping.")
     except toolkit.ObjectNotFound:  
         logging.info("Creating vocab 'geographies'")
-        data = {'name': 'data_types'}
-        vocab = toolkit.get_action('vocabulary_create')(context, geographies)
+        data = {'name': 'geographies'}
+        vocab = toolkit.get_action('vocabulary_create')(context, data)
         for tag in (u'LGA',u'SLA',u'IA',u'ML'):
             logging.info(
                     "Adding tag {0} to vocab 'geographies'".format(tag))
@@ -48,9 +52,10 @@ def data_types():
                 data_dict={'vocabulary_id': 'data_types'})
     except toolkit.ObjectNotFound:
         return None
+
 def geographies():
     '''Return the list of terms from the geographies vocabulary.'''
-    create_data_types()
+    create_geographies()
     try:
         return toolkit.get_action('tag_list')(
                 data_dict={'vocabulary_id': 'geographies'})

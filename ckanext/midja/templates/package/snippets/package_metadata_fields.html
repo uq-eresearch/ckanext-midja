@@ -19,6 +19,16 @@ won't work. #}
       </select>
     </div>
   </div>
+  <div class="control-group">
+    <label class="control-label" for="field-geography">{{ _("Geography(ies)") }}</label>
+    <div class="controls">
+      <select id="field-geography" name="geography" data-module="autocomplete">
+        {% for geography in h.geographies()  %}
+          <option value="{{ geography }}" {% if geography in data.get('geography', []) %}selected="selected"{% endif %}>{{ geography }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
 
   {{ super() }}
 
