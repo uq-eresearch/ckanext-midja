@@ -5,4 +5,5 @@
 
   {{ form.input('date', label=_('Date'), id='field-date', placeholder=_('Date'), value=data.date, error=errors.date, classes=['control-medium']) }}
 
+  {{ form.markdown('availability_notes', label=_('Notes'), id='field-availability_notes', placeholder=_('Notes'), value=data.availability_notes, error=errors.availability_notes, classes=['control-full']) }}
 {% endblock %}

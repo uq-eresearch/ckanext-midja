@@ -20,5 +20,10 @@
     <p><strong>Type:</strong> {{ pkg.data_type[0] }}</p>
     </section>
   {% endif %}
+  {% if pkg.get('availability_notes') %}
+    <section id="dataset-availability_notes" class="embedded-content">
+    <p><strong>Notes:</strong> {{ h.render_markdown(pkg.availability_notes) }}</p>
+    </section>
+  {% endif %}
 
 {% endblock %}

@@ -105,6 +105,10 @@ class MidjaPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
                 'date': [toolkit.get_validator('ignore_missing'),
                     toolkit.get_converter('convert_to_extras')]
                 })
+        schema.update({
+                'availability_notes': [toolkit.get_validator('ignore_missing'),
+                    toolkit.get_converter('convert_to_extras')]
+                })
 
         return schema
 
@@ -145,6 +149,10 @@ class MidjaPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 
         schema.update({
             'date': [toolkit.get_converter('convert_from_extras'),
+                toolkit.get_validator('ignore_missing')]
+            })
+        schema.update({
+            'availability_notes': [toolkit.get_converter('convert_from_extras'),
                 toolkit.get_validator('ignore_missing')]
             })
 
